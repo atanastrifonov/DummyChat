@@ -14,34 +14,33 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the request database table.
  * 
  */
 @Entity
-@Table(name="request")
-@NamedQuery(name="Request.findAll", query="SELECT r FROM Request r")
+@Table(name = "request")
+@NamedQuery(name = "Request.findAll", query = "SELECT r FROM Request r")
 public class Request implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-    @Column(name = "id")
+	@Column(name = "id")
 	private int id;
-	
+
 	@Basic(optional = false)
-    @Column(name = "type")
+	@Column(name = "type")
 	private String type;
 
 	@Basic(optional = false)
-    @Column(name = "payload")
+	@Column(name = "payload")
 	private String payload;
 
 	@Basic(optional = false)
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
@@ -55,7 +54,7 @@ public class Request implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getType() {
 		return this.type;
 	}
@@ -71,7 +70,7 @@ public class Request implements Serializable {
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
-	
+
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}

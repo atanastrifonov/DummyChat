@@ -48,17 +48,17 @@ public class JPADataConfig {
 		emfb.setLoadTimeWeaver(new ReflectiveLoadTimeWeaver());
 		return emfb;
 	}
-		
+
 	@Bean
 	public BeanPostProcessor persistenceTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
-	
-    @Bean
-    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emf) throws Exception {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf.getObject());
 
-        return transactionManager;
-    }
+	@Bean
+	public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emf) throws Exception {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(emf.getObject());
+
+		return transactionManager;
+	}
 }
