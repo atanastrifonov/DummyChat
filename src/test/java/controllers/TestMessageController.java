@@ -22,11 +22,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.EmotionPayload;
+import dto.Payload;
 import dto.TextPayload;
-import entity.Request;
 import service.capi.RequestService;
 import service.impl.DefaultRequestService;
-
 
 public class TestMessageController {
 
@@ -52,70 +51,64 @@ public class TestMessageController {
 
 	@Test
 	public void testPostText() throws Exception {
-		
+
 		// happy case
 		TextPayload validPayloadDTO = new TextPayload(VALID_TEXT_PAYLOAD);
-		
-		this.mockMvc.perform(
-				post(SEND_TEXT_URL)
-					.contentType(MediaType.APPLICATION_JSON)
-					.content(convertObjectToJsonBytes(validPayloadDTO)))
-				.andExpect(status().isCreated())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+
+		this.mockMvc
+				.perform(post(SEND_TEXT_URL).contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJsonBytes(validPayloadDTO)))
+				.andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().string(EMPTY_RESPONSE_BODY));
-		
-		verify(this.mockRequestService, times(1)).addRequest(Matchers.<Request>anyObject());
-		
+
+		verify(this.mockRequestService, times(1)).addRequest(Matchers.<Payload>anyObject());
+
 		// error case
 		TextPayload unvalidPayloadDTO = new TextPayload(UNVALID_TEXT_PAYLOAD);
-		
-		this.mockMvc.perform(
-				post(SEND_TEXT_URL)
-					.contentType(MediaType.APPLICATION_JSON)
-					.content(convertObjectToJsonBytes(unvalidPayloadDTO)))
+
+		this.mockMvc
+				.perform(post(SEND_TEXT_URL).contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJsonBytes(unvalidPayloadDTO)))
 				.andExpect(status().isPreconditionFailed())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().string(EMPTY_RESPONSE_BODY));
-		
+
 		verifyZeroInteractions(this.mockRequestService);
-	
+
 	}
-	
+
 	@Test
 	public void testPostEmotion() throws Exception {
-		
+
 		// happy case
 		EmotionPayload validPayloadDTO = new EmotionPayload(VALID_EMOTION_PAYLOAD);
-		
-		this.mockMvc.perform(
-				post(SEND_EMOTION_URL)
-					.contentType(MediaType.APPLICATION_JSON)
-					.content(convertObjectToJsonBytes(validPayloadDTO)))
-				.andExpect(status().isCreated())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+
+		this.mockMvc
+				.perform(post(SEND_EMOTION_URL).contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJsonBytes(validPayloadDTO)))
+				.andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().string(EMPTY_RESPONSE_BODY));
-		
-		verify(this.mockRequestService, times(1)).addRequest(Matchers.<Request>anyObject());
-		
+
+		verify(this.mockRequestService, times(1)).addRequest(Matchers.<Payload>anyObject());
+
 		// error case
 		EmotionPayload unvalidPayloadDTO = new EmotionPayload(UNVALID_EMOTION_PAYLOAD);
-		
-		this.mockMvc.perform(
-				post(SEND_EMOTION_URL)
-					.contentType(MediaType.APPLICATION_JSON)
-					.content(convertObjectToJsonBytes(unvalidPayloadDTO)))
+
+		this.mockMvc
+				.perform(post(SEND_EMOTION_URL).contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJsonBytes(unvalidPayloadDTO)))
 				.andExpect(status().isPreconditionFailed())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(content().string(EMPTY_RESPONSE_BODY));
-		
+
 		verifyZeroInteractions(this.mockRequestService);
-		
+
 	}
-	
+
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.writeValueAsBytes(object);
-    }
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
+	}
 
 }

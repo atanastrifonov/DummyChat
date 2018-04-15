@@ -3,6 +3,9 @@ package dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = TextPayload.class)
 public class TextPayload extends Payload {
 	
 	@NotNull

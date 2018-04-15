@@ -1,7 +1,7 @@
 package service.capi;
 
-import entity.Request;
+import dto.Payload;
 
 public interface RequestService {
-	public void addRequest(Request request);
+	public void addRequest(Payload payload);
 }
