@@ -25,7 +25,7 @@ public class MessageController {
 	RequestService requestService;
 
 	@RequestMapping(value = "/messages/{type:send_text|send_emotion}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<EmptyJsonBody> postMessage(@PathVariable String type, @Valid @RequestBody Payload payload) {
+	public ResponseEntity<EmptyJsonBody> postMessage(@Valid @RequestBody Payload payload) {
 		requestService.addRequest(payload);
 		return new ResponseEntity<EmptyJsonBody>(new EmptyJsonBody(), HttpStatus.CREATED);
 	}

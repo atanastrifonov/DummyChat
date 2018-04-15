@@ -19,6 +19,9 @@ import dto.TextPayload;
 
 public class PayloadDeserializer extends JsonDeserializer<Payload> {
 
+	public static final String TEXT = "send_text";
+	public static final String EMOTION = "send_emotion";
+
 	@Override
 	public Payload deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
@@ -33,9 +36,9 @@ public class PayloadDeserializer extends JsonDeserializer<Payload> {
 		ObjectMapper mapper = (ObjectMapper) jp.getCodec();
 		Class<? extends Payload> payloadClass = null;
 
-		if (pathParam.equals("send_text")) {
+		if (pathParam.equals(TEXT)) {
 			payloadClass = TextPayload.class;
-		} else if (pathParam.equals("send_emotion")) {
+		} else if (pathParam.equals(EMOTION)) {
 			payloadClass = EmotionPayload.class;
 		}
 		if (payloadClass == null) {
